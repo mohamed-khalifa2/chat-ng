@@ -1,0 +1,62 @@
+<div class="flex justify-center items-center h-screen bg-blue-300">
+    <div class="w-4/5 h-[80vh] bg-white shadow-lg rounded-2xl flex overflow-hidden">
+      <!-- Sidebar -->
+      <div class="w-1/3 bg-gray-100 p-4 border-r">
+        <h2 class="text-lg font-semibold mb-4">Chats</h2>
+        <div *ngFor="let chat of chats" class="flex items-center p-3 hover:bg-gray-200 rounded-lg cursor-pointer">
+          <div class="w-10 h-10 bg-gray-400 rounded-full"></div>
+          <div class="ml-3">
+            <p class="font-medium">{{ chat.name }}</p>
+            <p class="text-sm text-gray-500">{{ chat.lastMessage }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Chat Window -->
+      <div class="w-2/3 flex flex-col">
+        <!-- Header -->
+        <div class="p-4 border-b bg-white flex items-center">
+          <div class="w-10 h-10 bg-gray-400 rounded-full"></div>
+          <p class="ml-3 font-semibold">David Moore</p>
+        </div>
+        
+        <!-- Messages -->
+        <div class="flex-1 p-4 overflow-y-auto bg-blue-50">
+          <div *ngFor="let message of messages" class="mb-3 flex"
+               [ngClass]="{'justify-end': message.isUser}">
+            <div class="p-3 rounded-lg max-w-xs"
+                 [ngClass]="{'bg-white shadow': !message.isUser, 'bg-blue-500 text-white': message.isUser}">
+              {{ message.text }}
+            </div>
+          </div>
+        </div>
+        
+        <!-- Input -->
+        <div class="p-4 border-t bg-white flex items-center">
+          <input [(ngModel)]="newMessage" type="text" placeholder="Type a message..."
+                 class="flex-1 p-2 border rounded-lg outline-none">
+          <button (click)="sendMessage()" class="ml-2 cursor-pointer bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg ">
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+            <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+          </svg>
+        </button>
+        </div>
+
+        <div class="absolute top-5 right-5 ">
+            <button (click)="toggleMenu()" class=" cursor-pointer w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-lg">
+              &#x2630;
+            </button>
+            
+            <div *ngIf="menuOpen" class="absolute top-14 right-0 bg-white shadow-lg p-2 w-40 po">
+              <button class="block w-full text-left px-4 py-2 hover:bg-gray-200">Search user</button>
+              <button class="block w-full text-left px-4 py-2 hover:bg-gray-200">Create group</button>
+              <a href="" class="block w-full text-left px-4 py-2 hover:bg-gray-200 text-red-600">Sign out</a> 
+            </div>
+          </div>
+
+
+      </div>
+    </div>
+
+    
+  </div>
