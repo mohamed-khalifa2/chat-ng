@@ -1,62 +1,82 @@
-<div class="flex justify-center items-center h-screen bg-blue-300">
-    <div class="w-4/5 h-[80vh] bg-white shadow-lg rounded-2xl flex overflow-hidden">
-      <!-- Sidebar -->
-      <div class="w-1/3 bg-gray-100 p-4 border-r">
-        <h2 class="text-lg font-semibold mb-4">Chats</h2>
-        <div *ngFor="let chat of chats" class="flex items-center p-3 hover:bg-gray-200 rounded-lg cursor-pointer">
+<div class="flex justify-center items-center h-screen bg-blue-300 p-2">
+  <div class="w-full max-w-[1200px] h-[90vh] bg-white shadow-lg rounded-2xl flex overflow-hidden relative">
+    
+<!-- sidebar start  -->
+     <div  
+      [ngClass]="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen}" 
+      class="fixed top-0 left-0 w-full z-50 sm:w-1/3 h-full bg-gray-100 p-4 border-r shadow-lg transition-transform duration-300 sm:relative sm:translate-x-0 z-50">
+      <h2 class="text-lg font-semibold mb-4 flex justify-between items-center">
+        Chats
+        <button class="sm:hidden text-lg" (click)="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+        </svg></button>
+      </h2>
+      <!-- search bar  -->
+      <input [(ngModel)]="searchQuery" type="text" placeholder="Search chats..." class="w-full p-2 mb-4 border rounded-lg outline-none" />
+      
+      <!-- user in chat list -->
+      <div class="flex items-center p-3 hover:bg-gray-200 rounded-lg cursor-pointer">
+        <div class="w-10 h-10 bg-gray-400 rounded-full"></div>
+        <div class="ml-3">
+          <p class="font-medium">username</p>
+          <p class="text-sm text-gray-500">last message placeholder</p>
+        </div>
+      </div>
+      <!-- user in chat list end -->
+    </div>
+    <!-- sidebar end -->
+    
+
+
+    <!-- chat window start -->
+    <div class="w-full sm:w-2/3 flex flex-col" >
+      <!-- Header -->
+      <div class="p-4 border-b bg-white flex items-center justify-between relative">
+        <div class="flex items-center">
+          <button class="sm:hidden mr-3 text-lg" (click)="toggleSidebar()">☰</button>
           <div class="w-10 h-10 bg-gray-400 rounded-full"></div>
-          <div class="ml-3">
-            <p class="font-medium">{{ chat.name }}</p>
-            <p class="text-sm text-gray-500">{{ chat.lastMessage }}</p>
-          </div>
+          <p class="ml-3 font-semibold">name</p>
+        </div>
+
+        <!-- Floating settings -->
+        <button (click)="toggleMenu()" class="menu-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
+            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+          </svg>
+        </button>
+        <!-- dropdown menu -->
+        <div *ngIf="menuOpen" class="menu-dropdown">
+          <button class="block w-full text-left px-4 py-2 hover:bg-gray-200">Search user</button>
+          <button class="block w-full text-left px-4 py-2 hover:bg-gray-200">Create group</button>
+          <a href="" (click)="logOut()" class="block w-full text-left px-4 py-2 hover:bg-gray-200 text-red-600">Sign out</a>
+        </div>
+      </div>
+
+      
+      <!-- Messages -->
+      <div class="flex-1 p-4 sm:p-6 overflow-y-auto bg-blue-50 flex flex-col space-y-2">
+        <div *ngFor="let message of messages"
+             class="message-container"
+             [ngClass]="{
+               'ml-auto bg-blue-500 text-white user-message': message.sender._id === senderId,
+               'mr-auto bg-gray-300 text-black other-message': message.sender._id !== senderId}">
+          {{ message.content }}
         </div>
       </div>
       
-      <!-- Chat Window -->
-      <div class="w-2/3 flex flex-col">
-        <!-- Header -->
-        <div class="p-4 border-b bg-white flex items-center">
-          <div class="w-10 h-10 bg-gray-400 rounded-full"></div>
-          <p class="ml-3 font-semibold">David Moore</p>
-        </div>
-        
-        <!-- Messages -->
-        <div class="flex-1 p-4 overflow-y-auto bg-blue-50">
-          <div *ngFor="let message of messages" class="mb-3 flex"
-               [ngClass]="{'justify-end': message.isUser}">
-            <div class="p-3 rounded-lg max-w-xs"
-                 [ngClass]="{'bg-white shadow': !message.isUser, 'bg-blue-500 text-white': message.isUser}">
-              {{ message.text }}
-            </div>
-          </div>
-        </div>
-        
-        <!-- Input -->
-        <div class="p-4 border-t bg-white flex items-center">
-          <input [(ngModel)]="newMessage" type="text" placeholder="Type a message..."
-                 class="flex-1 p-2 border rounded-lg outline-none">
-          <button (click)="sendMessage()" class="ml-2 cursor-pointer bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg ">
-             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+      <!-- message input -->
+      <div class="p-4 border-t bg-white flex items-center">
+        <input [(ngModel)]="newMessage" type="text" placeholder="Type a message..." class="flex-1 p-3 border rounded-lg outline-none">
+        <button (click)="sendMessage()" class="ml-2 bg-blue-500 hover:bg-blue-400 text-white px-5 py-3 rounded-lg">
+
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
             <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
           </svg>
+          
         </button>
-        </div>
-
-        <div class="absolute top-5 right-5 ">
-            <button (click)="toggleMenu()" class=" cursor-pointer w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-lg">
-              &#x2630;
-            </button>
-            
-            <div *ngIf="menuOpen" class="absolute top-14 right-0 bg-white shadow-lg p-2 w-40 po">
-              <button class="block w-full text-left px-4 py-2 hover:bg-gray-200">Search user</button>
-              <button class="block w-full text-left px-4 py-2 hover:bg-gray-200">Create group</button>
-              <a href="" class="block w-full text-left px-4 py-2 hover:bg-gray-200 text-red-600">Sign out</a> 
-            </div>
-          </div>
-
-
       </div>
     </div>
-
-    
   </div>
+
+  

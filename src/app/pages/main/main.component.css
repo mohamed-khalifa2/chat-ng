@@ -1,0 +1,102 @@
+
+.sidebar {
+    transition: transform 0.3s ease-in-out;
+}
+
+
+.message-container {
+    
+    max-width: 60%; 
+    padding: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+    white-space: pre-wrap;
+    display: inline-block; 
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.3s ease-in-out forwards;
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.user-message {
+    align-self: flex-end;
+    background-color: #3b82f6; 
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: left; 
+}
+
+.other-message {
+    align-self: flex-start;
+    background-color: #e5e7eb; 
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: left; 
+}
+
+
+@media (max-width: 768px) {
+    .message-container {
+        max-width: 75%; 
+    }
+}
+
+@media (max-width: 480px) {
+    .message-container {
+        max-width: 85%;
+    }
+}
+.menu-btn {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%); 
+    width: 40px;
+    height: 40px;
+    background-color: #3b82f6; 
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 40; 
+}
+
+
+.menu-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 5px 0;
+    width: 150px;
+    z-index: 102;
+}
+
+
+@media (max-width: 480px) {
+    .menu-btn {
+        right: 10px;
+    }
+    .menu-dropdown {
+        right: 5px;
+    }
+}
